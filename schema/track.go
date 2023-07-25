@@ -31,6 +31,7 @@ type Track struct {
 
 	File string `json:"file"`
 
+	// Может быть пустым, даже если IsLegal == true.
 	Artist SimpleArtist `json:"artist"`
 
 	IsAdded bool `json:"isAdded"`
