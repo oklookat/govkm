@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Debug",
-            "console": "integratedTerminal",
+            "console": "externalTerminal",
             "type": "go",
             "request": "launch",
             "mode": "auto",
