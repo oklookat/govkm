@@ -18,6 +18,19 @@ func TestAlbum(t *testing.T) {
 	}
 }
 
+func TestAlbumTracks(t *testing.T) {
+	ctx := context.Background()
+	cl := getClient(t)
+
+	resp, err := cl.AlbumTracks(ctx, _albumIds[0])
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(resp.Data.Tracks) == 0 {
+		t.Fatal("len(resp.Data.Tracks) == 0")
+	}
+}
+
 func TestLikeUnlikeAlbum(t *testing.T) {
 	ctx := context.Background()
 	cl := getClient(t)

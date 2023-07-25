@@ -11,6 +11,11 @@ func (c Client) Album(ctx context.Context, id schema.ID) (*schema.Response[schem
 	return getEntityById[schema.AlbumResponse](ctx, &c, "album", id)
 }
 
+// Получить треки из альбома.
+func (c Client) AlbumTracks(ctx context.Context, id schema.ID) (*schema.Response[schema.TracksResponse], error) {
+	return getAny[schema.TracksResponse](ctx, &c, nil, "album", id.String(), "tracks/")
+}
+
 // Лайкнуть альбом.
 func (c Client) LikeAlbum(ctx context.Context, id schema.ID) (*schema.Response[any], error) {
 	return likeUnlikeEntity(ctx, &c, "album", id, true)
