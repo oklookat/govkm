@@ -2,6 +2,7 @@ package govkm
 
 import (
 	"context"
+	"errors"
 
 	"github.com/oklookat/govkm/schema"
 	"github.com/oklookat/vantuz"
@@ -9,6 +10,10 @@ import (
 
 const (
 	_errPrefix = "govkm"
+)
+
+var (
+	ErrLikedTracksPlaylistNotFound = errors.New(_errPrefix + ": liked tracks playlist not found")
 )
 
 // Получить Client для запросов к API, и ID текущего пользователя.

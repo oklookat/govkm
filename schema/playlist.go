@@ -10,6 +10,7 @@ type (
 	}
 
 	Playlist struct {
+		// Плейлист с лайкнутыми треками?
 		IsFavorite bool `json:"isFavorite"`
 
 		UpdatedAt UnixTime `json:"updatedAt"`

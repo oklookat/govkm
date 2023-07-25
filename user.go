@@ -34,14 +34,22 @@ func (c Client) UserPlaylists(ctx context.Context, limit, offset int) (*schema.R
 
 // Обертка над UserPlaylists, чтобы найти плейлист с лайкнутыми треками.
 func (c Client) LikedTracks(ctx context.Context) (*schema.Playlist, error) {
-	resp, err := c.UserPlaylists(ctx, 100, 0)
-	if err != nil {
-		return nil, err
-	}
-	for i := range resp.Data.Playlists {
-		if resp.Data.Playlists[i].IsDefault {
-			return &resp.Data.Playlists[i], err
+	offset := 0
+	for {
+		data, err := c.UserPlaylists(ctx, 30, offset)
+		if err != nil {
+			return nil, err
 		}
+		if len(data.Data.Playlists) == 0 {
+			break
+		}
+		for i := range data.Data.Playlists {
+			if !data.Data.Playlists[i].IsFavorite {
+				continue
+			}
+			return &data.Data.Playlists[i], err
+		}
+		offset += len(data.Data.Playlists)
 	}
-	return nil, err
+	return nil, ErrLikedTracksPlaylistNotFound
 }
