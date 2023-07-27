@@ -56,6 +56,10 @@ func (e ResponseError) IsUnauthorized() bool {
 	return strings.EqualFold(e.HError, "unauthorized")
 }
 
+func (e ResponseError) IsNotFound() bool {
+	return strings.Contains(e.HError, "invalid_param") || strings.Contains(e.HError, "not_found")
+}
+
 func NewErrorWithStatusCode(code int) ErrorWithStatusCode {
 	return ErrorWithStatusCode{
 		StatusCode: code,
