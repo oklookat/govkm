@@ -16,7 +16,11 @@ type Track struct {
 	// (?) Трек недоступен / изъят / etc.
 	IsRestricted bool `json:"isRestricted"`
 
-	Album SimpleAlbum `json:"album"`
+	// Альбома может не быть если трек как бы официальный,
+	// но как бы и нет.
+	// То есть трек может быть залит официально,
+	// но без обложки. И возможно без альбома.
+	Album *SimpleAlbum `json:"album"`
 
 	// Трек с ненормативной лексикой?
 	IsExplicit bool `json:"isExplicit"`
@@ -76,8 +80,9 @@ type Track struct {
 	} `json:"permissions"`
 }
 
-// Обложка трека сгенерирована?
-// Трек может быть официально загружен, но быть без обложки.
-func (t Track) IsDefaultCover() bool {
-	return len(t.Cover.URL) == 0 || strings.Contains(t.Cover.URL, "default_cover")
+// Трек загружен неофициально/изъят/etc?
+func (t Track) IsUnofficial() bool {
+	return len(t.Cover.URL) == 0 ||
+		strings.Contains(t.Cover.URL, "default_cover") ||
+		t.Album == nil
 }
