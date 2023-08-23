@@ -45,10 +45,11 @@ func TestLikedAlbums(t *testing.T) {
 	ctx := context.Background()
 	cl := getClient(t)
 
-	_, err := cl.LikedAlbums(ctx, 10, 0)
+	als, err := cl.LikedAlbums(ctx, 10, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
+	println(len(als.Data.Albums))
 }
 
 func TestLikedTracks(t *testing.T) {
@@ -62,4 +63,15 @@ func TestLikedTracks(t *testing.T) {
 	if pl == nil {
 		t.Fatal("liked tracks playlist cannot be nil")
 	}
+}
+
+func TestUserPlaylists(t *testing.T) {
+	ctx := context.Background()
+	cl := getClient(t)
+
+	pls, err := cl.UserPlaylists(ctx, 0, 10)
+	if err != nil {
+		t.Fatal(err)
+	}
+	println(len(pls.Data.Playlists))
 }
